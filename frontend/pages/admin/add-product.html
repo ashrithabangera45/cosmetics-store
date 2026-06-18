@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product - Admin</title>
+    <link rel="stylesheet" href="../../css/admin-style.css">
+</head>
+<body class="admin-dashboard">
+    <!-- Admin Navigation -->
+    <nav class="admin-navbar">
+        <div class="admin-nav-brand">💄 Admin Panel</div>
+        <ul class="admin-nav-links">
+            <li><a href="admin-dashboard.html">Dashboard</a></li>
+            <li><a href="add-product.html" class="active">Add Product</a></li>
+            <li><a href="manage-products.html">Manage Products</a></li>
+            <li><a href="manage-categories.html">Categories</a></li>
+            <li><a href="manage-orders.html">Orders</a></li>
+            <li><a href="view-users.html">Users</a></li>
+            <li><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="admin-container">
+        <main class="admin-content">
+            <h2>Add New Product</h2>
+            
+            <form id="add-product-form" class="admin-form">
+                <div class="form-group">
+                    <label for="category">Category *</label>
+                    <select id="category" name="category" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="name">Product Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="4"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="price">Price *</label>
+                        <input type="number" id="price" name="price" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Quantity *</label>
+                        <input type="number" id="quantity" name="quantity" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sku">SKU</label>
+                    <input type="text" id="sku" name="sku">
+                </div>
+                <div class="form-group">
+                    <label for="image">Product Image</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="active" name="active" checked>
+                        Active
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Product</button>
+                <div id="message" class="message"></div>
+            </form>
+        </main>
+    </div>
+
+    <script src="../../js/api.js"></script>
+    <script src="../../js/admin.js"></script>
+</body>
+</html>

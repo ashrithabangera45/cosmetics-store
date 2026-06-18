@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Cosmetics Store</title>
+    <link rel="stylesheet" href="../../css/admin-style.css">
+</head>
+<body class="admin-dashboard">
+    <!-- Admin Navigation -->
+    <nav class="admin-navbar">
+        <div class="admin-nav-brand">💄 Admin Panel</div>
+        <ul class="admin-nav-links">
+            <li><a href="admin-dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="add-product.html">Add Product</a></li>
+            <li><a href="manage-products.html">Manage Products</a></li>
+            <li><a href="manage-categories.html">Categories</a></li>
+            <li><a href="manage-orders.html">Orders</a></li>
+            <li><a href="view-users.html">Users</a></li>
+            <li><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <h3>Quick Stats</h3>
+            <div class="stat-card">
+                <h4>Total Products</h4>
+                <p id="total-products">0</p>
+            </div>
+            <div class="stat-card">
+                <h4>Total Orders</h4>
+                <p id="total-orders">0</p>
+            </div>
+            <div class="stat-card">
+                <h4>Total Users</h4>
+                <p id="total-users">0</p>
+            </div>
+            <div class="stat-card">
+                <h4>Total Categories</h4>
+                <p id="total-categories">0</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-content">
+            <h2>Dashboard</h2>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3>Recent Orders</h3>
+                    <table id="recent-orders" class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Order #</th>
+                                <th>Customer</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Quick Actions</h3>
+                    <ul class="action-list">
+                        <li><a href="add-product.html" class="btn btn-primary">+ Add New Product</a></li>
+                        <li><a href="manage-categories.html" class="btn btn-primary">+ Add Category</a></li>
+                        <li><a href="manage-orders.html" class="btn btn-primary">View All Orders</a></li>
+                        <li><a href="view-users.html" class="btn btn-primary">View Users</a></li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../js/api.js"></script>
+    <script src="../../js/admin.js"></script>
+</body>
+</html>

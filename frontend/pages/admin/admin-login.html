@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Cosmetics Store</title>
+    <link rel="stylesheet" href="../../css/admin-style.css">
+</head>
+<body class="admin-login-page">
+    <div class="login-container">
+        <div class="login-box">
+            <h1>Admin Panel</h1>
+            <p>Cosmetics Store Management</p>
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="admin@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Login</button>
+                <div id="login-message" class="message"></div>
+            </form>
+            <p class="back-link"><a href="../../index.html">Back to Store</a></p>
+        </div>
+    </div>
+
+    <script src="../../js/api.js"></script>
+    <script>
+        document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const messageDiv = document.getElementById('login-message');
+
+            try {
+                const response = await fetch('../../../../backend/api/auth.php', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({action: 'login', email, password, role: 'admin'})
+                });
+                const data = await response.json();
+                
+                if (data.success && data.user.role === 'admin') {
+                    messageDiv.textContent = 'Login successful! Redirecting...';
+                    messageDiv.className = 'message success';
+                    localStorage.setItem('admin', JSON.stringify(data.user));
+                    setTimeout(() => window.location.href = 'admin-dashboard.html', 1500);
+                } else {
+                    messageDiv.textContent = 'Invalid credentials or not an admin';
+                    messageDiv.className = 'message error';
+                }
+            } catch (error) {
+                messageDiv.textContent = 'Error: ' + error.message;
+                messageDiv.className = 'message error';
+            }
+        });
+    </script>
+</body>
+</html>
