@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Status - Cosmetics Store</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>💄 Cosmetics Store</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="cart.html">Cart <span id="cart-count" class="badge">0</span></a></li>
+                <li id="user-menu">
+                    <a href="login.html">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Order Status Section -->
+    <section class="order-status-section">
+        <div class="container">
+            <h2>Order Status</h2>
+
+            <div class="orders-container">
+                <div class="search-order">
+                    <input type="text" id="order-search" placeholder="Enter Order Number">
+                    <button id="search-btn" class="btn btn-primary">Search</button>
+                </div>
+
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order Number</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-body">
+                        <!-- Orders will be loaded here -->
+                    </tbody>
+                </table>
+
+                <div id="no-orders" class="empty-message">
+                    No orders found. <a href="products.html">Start Shopping</a>
+                </div>
+            </div>
+
+            <!-- Order Details Modal -->
+            <div id="order-modal" class="modal" style="display:none;">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <h3>Order Details</h3>
+                    <div id="modal-body">
+                        <!-- Order details will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Us</h4>
+                    <p>Premium quality cosmetics and beauty products at affordable prices.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: info@cosmeticsstore.com</p>
+                    <p>Phone: +91-XXXXXXXXXX</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Cosmetics Store. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            loadOrders();
+        });
+
+        async function loadOrders() {
+            try {
+                const response = await fetch('../../../backend/api/orders.php?action=get_user_orders', {
+                    method: 'GET',
+                    headers: {'Content-Type': 'application/json'}
+                });
+                const data = await response.json();
+                const ordersBody = document.getElementById('orders-body');
+                const noOrders = document.getElementById('no-orders');
+
+                if (data.success && data.orders.length > 0) {
+                    noOrders.style.display = 'none';
+                    ordersBody.innerHTML = data.orders.map(order => `
+                        <tr>
+                            <td>${order.order_number}</td>
+                            <td>${new Date(order.created_at).toLocaleDateString()}</td>
+                            <td>$${parseFloat(order.total_amount).toFixed(2)}</td>
+                            <td><span class="status-badge ${order.status}">${order.status}</span></td>
+                            <td>
+                                <button class="btn btn-sm" onclick="viewOrderDetails(${order.id})">View</button>
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    ordersBody.innerHTML = '';
+                    noOrders.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error loading orders:', error);
+            }
+        }
+
+        function viewOrderDetails(orderId) {
+            // Fetch and display order details in modal
+            document.getElementById('order-modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('order-modal').style.display = 'none';
+        }
+
+        document.getElementById('search-btn').addEventListener('click', () => {
+            // Implement search functionality
+        });
+    </script>
+</body>
+</html>
