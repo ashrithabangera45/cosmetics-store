@@ -1,0 +1,46 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Dependencies
+node_modules/
+vendor/
+composer.lock
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Database backups
+*.sql.bak
+*.sql.backup
+
+# Configuration files with sensitive data
+config.local.php
+database.local.php
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Build files
+dist/
+build/
+
+# Cache files
+*.cache
+.cache/
